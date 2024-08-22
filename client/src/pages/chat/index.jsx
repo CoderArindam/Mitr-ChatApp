@@ -1,16 +1,18 @@
-import ChatHeader from "@/components/chat/ChatHeader";
-import ChatList from "@/components/chat/ChatList";
-import StorySection from "@/components/chat/StorySection";
-import Sidebar from "@/components/global/Sidebar";
+import { useAppStore } from "@/store";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Chat = () => {
-  return (
-    <div>
-      <ChatHeader />
-      <ChatList />
-      <Sidebar />
-    </div>
-  );
+  const { userInfo } = useAppStore();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userInfo.profileSetup) {
+      toast("please setup profile to continue");
+      navigate("/profile");
+    }
+  }, [userInfo, navigate]);
+  return <div>Chat</div>;
 };
 
 export default Chat;

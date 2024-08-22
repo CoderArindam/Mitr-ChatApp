@@ -1,5 +1,12 @@
+import { useAppStore } from "@/store";
+
 const Profile = () => {
-  return <div>Profile</div>;
+  const { userInfo } = useAppStore();
+  return (
+    <>
+      <h1>{userInfo.email}</h1>
+    </>
+  );
 };
 
 export default Profile;

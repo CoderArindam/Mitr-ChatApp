@@ -1,5 +1,6 @@
 import Background from "../../../public/assets/images/login2.png";
 import { Button } from "@/components/ui/button";
+
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
@@ -7,8 +8,10 @@ import { toast } from "sonner";
 import { apiClient } from "@/lib/apiClient";
 import { LOGIN_ROUTE, SIGNUP_ROUTE } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
+import { useAppStore } from "@/store";
 
 const Auth = () => {
+  const { setUserInfo } = useAppStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -53,6 +56,7 @@ const Auth = () => {
         }
       );
       if (response.status === 201) {
+        setUserInfo(response.data.user);
         navigate("/profile");
       }
     }
@@ -68,6 +72,7 @@ const Auth = () => {
         }
       );
       if (response.data.user.id) {
+        setUserInfo(response.data.user);
         if (response.data.user.profileSetup) {
           navigate("/chat");
         } else {
