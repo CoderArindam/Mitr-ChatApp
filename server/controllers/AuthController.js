@@ -36,18 +36,23 @@ const login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).send("invalid credentials");
-    }
-    const auth = await bcrypt.compare(password, user.password);
-    if (!auth) {
-      return res.status(404).send("invalid credentials");
+      return res.status(404).send("Invalid credentials");
     }
 
+    const auth = await bcrypt.compare(password, user.password);
+    if (!auth) {
+      return res.status(404).send("Invalid credentials");
+    }
+
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.cookie("token", generateToken(email, user._id), {
-      maxAge,
-      secure: true,
-      sameSite: "None",
+      maxAge: maxAge * 1000, // Convert to milliseconds
+      secure: isProduction, // Secure flag for production only
+      httpOnly: true, // Prevent client-side JS access
+      sameSite: isProduction ? "None" : "Lax", // SameSite setting
     });
+
     return res.status(200).json({
       user: {
         id: user._id,
@@ -85,4 +90,39 @@ const getUserInfo = async (req, res, next) => {
     return res.status(500).send("Internal Server Error");
   }
 };
-export { signUp, login, getUserInfo };
+
+const updateProfile = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    const { firstName, lastName, selectedColor } = req.body;
+
+    if (!firstName || !lastName || !selectedColor) {
+      return res.status(400).send("all details are required");
+    }
+
+    const userData = await User.findByIdAndUpdate(
+      userId,
+      {
+        firstName,
+        lastName,
+        color: selectedColor,
+        profileSetup: true,
+      },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json({
+      id: userData._id,
+      email: userData.email,
+      profileSetup: userData.profileSetup,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      image: userData.image,
+      color: userData.color,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
+export { signUp, login, getUserInfo, updateProfile };
