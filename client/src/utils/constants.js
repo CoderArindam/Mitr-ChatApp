@@ -10,6 +10,12 @@ const GET_USER_INFO = `${AUTH_ROUTES}/get-user-info`;
 
 const UPDATE_PROFILE_ROUTE = `${AUTH_ROUTES}/update-profile`;
 
+const ADD_PROFILE_IMAGE_ROUTE = `${AUTH_ROUTES}/add-profile-image`;
+
+const REMOVE_PROFILE_IMAGE_ROUTE = `${AUTH_ROUTES}/remove-profile-image`;
+
+const LOGOUT_ROUTE = `${AUTH_ROUTES}/logout`;
+
 export {
   HOST,
   AUTH_ROUTES,
@@ -17,4 +23,7 @@ export {
   LOGIN_ROUTE,
   GET_USER_INFO,
   UPDATE_PROFILE_ROUTE,
+  ADD_PROFILE_IMAGE_ROUTE,
+  REMOVE_PROFILE_IMAGE_ROUTE,
+  LOGOUT_ROUTE,
 };
