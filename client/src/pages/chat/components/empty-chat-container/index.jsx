@@ -12,7 +12,7 @@ const EmptyChatContainer = () => {
       />
       <div
         className="text-opacity-80 Itext-white flex
-  flex-col gap-5 items-center mt-10 lg:text-4x1
+  flex-col gap-5 items-center mt-10 lg:text-4xl
   text-3xl transition-all duration-300 text-center"
       >
         <h3 className="poppins-medium">
