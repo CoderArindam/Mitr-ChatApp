@@ -18,7 +18,13 @@ const LOGOUT_ROUTE = `${AUTH_ROUTES}/logout`;
 
 const CONTACT_ROUTES = "api/contacts";
 
+const GET_DM_CONTACTS_ROUTES = `${CONTACT_ROUTES}/get-contacts-for-dm`;
+
 const SEARCH_CONTACTS_ROUTES = `${CONTACT_ROUTES}/search`;
+
+const MESSAGES_ROUTES = "api/messages";
+
+const GET_ALL_MESSAGES_ROUTE = `${MESSAGES_ROUTES}/get-messages`;
 
 export {
   HOST,
@@ -31,4 +37,6 @@ export {
   REMOVE_PROFILE_IMAGE_ROUTE,
   LOGOUT_ROUTE,
   SEARCH_CONTACTS_ROUTES,
+  GET_ALL_MESSAGES_ROUTE,
+  GET_DM_CONTACTS_ROUTES,
 };
