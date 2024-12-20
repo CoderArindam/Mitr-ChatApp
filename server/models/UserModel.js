@@ -43,6 +43,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-const User = mongoose.model("User", userSchema); // Capitalized model name for consistency
+const User = mongoose.model("Users", userSchema); // Capitalized model name for consistency
 
 export default User;
