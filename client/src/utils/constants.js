@@ -26,6 +26,8 @@ const MESSAGES_ROUTES = "api/messages";
 
 const GET_ALL_MESSAGES_ROUTE = `${MESSAGES_ROUTES}/get-messages`;
 
+const UPLOAD_FILE_ROUTE = `${MESSAGES_ROUTES}/upload-file`;
+
 export {
   HOST,
   AUTH_ROUTES,
@@ -39,4 +41,5 @@ export {
   SEARCH_CONTACTS_ROUTES,
   GET_ALL_MESSAGES_ROUTE,
   GET_DM_CONTACTS_ROUTES,
+  UPLOAD_FILE_ROUTE,
 };

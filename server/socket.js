@@ -30,13 +30,13 @@ const setupSocket = (server) => {
   const sendMessage = async (message) => {
     const senderSocketId = userSocketMap.get(message.sender);
     const recipientSocketId = userSocketMap.get(message.recipient);
-
+    console.log("i am message", message);
     const createdMessage = await Message.create(message);
 
     const messageData = await Message.findById(createdMessage._id)
       .populate("sender", "id email firstName lastName image color")
       .populate("recipient", "id email firstName lastName image color");
-
+    console.log(messageData);
     if (recipientSocketId) {
       io.to(recipientSocketId).emit("recieveMessage", messageData);
     }
