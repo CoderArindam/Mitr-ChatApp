@@ -91,4 +91,13 @@ const getContactsForDMList = async (req, res, next) => {
   }
 };
 
+const getAllContacts = async (req, res, next) => {
+  try {
+    return res.status(200).json({ contacts });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
 export { searchContacts, getContactsForDMList };
