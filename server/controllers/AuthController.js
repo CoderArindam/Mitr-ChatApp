@@ -49,9 +49,9 @@ const login = async (req, res) => {
 
     res.cookie("token", generateToken(email, user._id), {
       maxAge: maxAge * 1000, // Convert to milliseconds
-      secure: isProduction, // Secure flag for production only
-      httpOnly: true, // Prevent client-side JS access
-      sameSite: isProduction ? "None" : "Lax", // SameSite setting
+      secure: true,
+      httpOnly: false,
+      sameSite: "None",
     });
 
     return res.status(200).json({

@@ -18,8 +18,8 @@ connectDb(db_url);
 
 app.use(
   cors({
-    // origin: [process.env.ORIGIN],
-    origin: "*",
+    origin: process.env.ORIGIN,
+    // origin: ["https://mitr-chat.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
