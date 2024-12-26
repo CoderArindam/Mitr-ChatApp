@@ -18,7 +18,8 @@ connectDb(db_url);
 
 app.use(
   cors({
-    origin: [process.env.ORIGIN],
+    // origin: [process.env.ORIGIN],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
