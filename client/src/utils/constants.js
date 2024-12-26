@@ -1,4 +1,5 @@
-const HOST = import.meta.env.VITE_SERVER_URL;
+// const HOST = import.meta.env.VITE_SERVER_URL;
+const HOST = "https://0j5nddp5-8000.inc1.devtunnels.ms/";
 
 const AUTH_ROUTES = "api/auth";
 
