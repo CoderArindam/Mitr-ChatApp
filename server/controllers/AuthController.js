@@ -1,7 +1,7 @@
 import User from "../models/UserModel.js";
+import cloudinary from "../utils/cloudinaryConfig.js";
 import { generateToken, maxAge } from "../utils/generateTokens.js";
 import bcrypt from "bcrypt";
-import { renameSync, unlinkSync } from "fs";
 const signUp = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -126,25 +126,71 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
+// const addProfileImage = async (req, res, next) => {
+//   try {
+//     if (!req.file) {
+//       return res.status(400).send("file is required");
+//     }
+//     const date = Date.now();
+//     console.log(req.file);
+
+//     let fileName = "uploads/profiles/" + date + req.file.originalname;
+//     renameSync(req.file.path, fileName);
+
+//     const updatedUser = await User.findByIdAndUpdate(
+//       req.userId,
+//       { image: fileName },
+//       { new: true, runValidators: true }
+//     );
+
+//     return res.status(200).json({
+//       image: updatedUser.image,
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//     return res.status(500).send("Internal Server Error");
+//   }
+// };
+
+// const removeProfileImage = async (req, res, next) => {
+//   try {
+//     const { userId } = req;
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).send("user not found");
+//     }
+
+//     if (user.image) {
+//       unlinkSync(user.image);
+//     }
+//     user.image = null;
+//     await user.save();
+
+//     return res.status(200).send("profile image removed successfully!");
+//   } catch (error) {
+//     console.log(error.message);
+//     return res.status(500).send("Internal Server Error");
+//   }
+// };
+
 const addProfileImage = async (req, res, next) => {
   try {
     if (!req.file) {
-      return res.status(400).send("file is required");
+      return res.status(400).send("File is required");
     }
-    const date = Date.now();
-    console.log(req.file);
 
-    let fileName = "uploads/profiles/" + date + req.file.originalname;
-    renameSync(req.file.path, fileName);
+    // Cloudinary image URL
+    const imageUrl = req.file.path; // Cloudinary provides this URL after uploading the image
 
+    // Update the user model with the Cloudinary image URL
     const updatedUser = await User.findByIdAndUpdate(
-      req.userId,
-      { image: fileName },
+      req.userId, // Assuming you get userId from the JWT payload
+      { image: imageUrl },
       { new: true, runValidators: true }
     );
 
     return res.status(200).json({
-      image: updatedUser.image,
+      image: updatedUser.image, // Return the Cloudinary image URL
     });
   } catch (error) {
     console.log(error.message);
@@ -155,18 +201,26 @@ const addProfileImage = async (req, res, next) => {
 const removeProfileImage = async (req, res, next) => {
   try {
     const { userId } = req;
+
+    // Find user by ID
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).send("user not found");
+      return res.status(404).send("User not found");
     }
 
     if (user.image) {
-      unlinkSync(user.image);
-    }
-    user.image = null;
-    await user.save();
+      // Extract public ID from the Cloudinary URL
+      const publicId = user.image.split("/").pop().split(".")[0]; // Assuming the URL has the pattern `https://res.cloudinary.com/<cloud-name>/image/upload/<public-id>`
 
-    return res.status(200).send("profile image removed successfully!");
+      // Delete the image from Cloudinary
+      await cloudinary.uploader.destroy(publicId);
+
+      // Remove the image from the user's profile
+      user.image = null;
+      await user.save();
+    }
+
+    return res.status(200).send("Profile image removed successfully!");
   } catch (error) {
     console.log(error.message);
     return res.status(500).send("Internal Server Error");
