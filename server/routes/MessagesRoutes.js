@@ -1,17 +1,18 @@
 import { Router } from "express";
 import { verifyToken } from "../middlewares/AuthMiddleware.js";
 import { getMessages, uploadFile } from "../controllers/MesagesController.js";
-import multer from "multer";
+import upload from "../utils/multerConfig.js"; // Import Cloudinary multer config
 
 const messagesRoutes = Router();
-const upload = multer({ dest: "uploads/files" });
 
+// Route to fetch messages
 messagesRoutes.post("/get-messages", verifyToken, getMessages);
 
+// Route to upload files
 messagesRoutes.post(
   "/upload-file",
   verifyToken,
-  upload.single("file"),
+  upload.single("file"), // Use multer configured with Cloudinary
   uploadFile
 );
 
