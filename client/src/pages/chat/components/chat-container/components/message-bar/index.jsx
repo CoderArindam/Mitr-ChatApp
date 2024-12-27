@@ -133,7 +133,16 @@ const MessageBar = () => {
         </div>
       </div>
       <button
-        onClick={handleSendMessage}
+        onClick={() => {
+          handleSendMessage();
+          setMessage("");
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSendMessage();
+            setMessage("");
+          }
+        }}
         className="bg-[#8417ff] rounded-md flex items-center justify-center p-5 hover:text-white focus:outline-none
           duration-300 transition-all hover:bg-[#741bda] focus:g-[#741bda]"
       >
