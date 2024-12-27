@@ -35,7 +35,7 @@ const Profile = () => {
     console.log(userInfo.image);
 
     if (userInfo.image) {
-      setImage(`${HOST}${userInfo.image}`);
+      setImage(`${userInfo.image}`);
     }
   }, [userInfo]);
 

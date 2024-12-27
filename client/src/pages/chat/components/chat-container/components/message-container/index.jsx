@@ -141,7 +141,7 @@ const MessageContainer = () => {
                 }}
               >
                 <img
-                  src={`${HOST}${message.fileUrl}`}
+                  src={`${message.fileUrl}`}
                   height={300}
                   width={300}
                   alt="file"
@@ -183,7 +183,7 @@ const MessageContainer = () => {
         >
           <div>
             <img
-              src={`${HOST}${imageURL}`}
+              src={`${imageURL}`}
               alt="file"
               className="h-[80vh] w-full bg-cover"
             />

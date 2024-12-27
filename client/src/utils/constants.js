@@ -1,5 +1,7 @@
 // const HOST = import.meta.env.VITE_SERVER_URL;
 const HOST = "https://mitr-chatapp.onrender.com/";
+const FILEHOST =
+  "https://res.cloudinary.com/dbcxkav2e/image/upload/v1735281555/chatApp/uploads/";
 
 const AUTH_ROUTES = "api/auth";
 
@@ -43,4 +45,5 @@ export {
   GET_ALL_MESSAGES_ROUTE,
   GET_DM_CONTACTS_ROUTES,
   UPLOAD_FILE_ROUTE,
+  FILEHOST,
 };
