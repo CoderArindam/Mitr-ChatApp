@@ -16,26 +16,32 @@ const db_url = process.env.DATABASE_URL;
 
 connectDb(db_url);
 
+// CORS configuration
 app.use(
   cors({
     origin: process.env.ORIGIN,
-    // origin: ["https://mitr-chat.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
 );
 
-app.use("/uploads/profiles", express.static("uploads/profiles"));
-app.use("/uploads/files", express.static("uploads/files"));
+// Static file serving removed, as you are now using Cloudinary for uploads
+// app.use("/uploads/profiles", express.static("uploads/profiles"));
+// app.use("/uploads/files", express.static("uploads/files"));
 
+// Middleware for parsing cookies and JSON bodies
 app.use(cookieParser());
 app.use(express.json());
+
+// Route handling
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/messages", messagesRoutes);
 
+// Start server
 const server = app.listen(port, () => {
-  console.log("server is running" + port);
+  console.log("server is running on port " + port);
 });
 
+// Set up socket.io if needed
 setupSocket(server);
