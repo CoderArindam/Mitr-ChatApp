@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+import User from "../models/UserModel.js";
 import { generateToken, maxAge } from "../utils/generateTokens.js";
 import bcrypt from "bcrypt";
 import { renameSync, unlinkSync } from "fs";
